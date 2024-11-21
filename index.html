@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Mosquito Deterrent</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar">
+	<img src="logo.png" alt="App Logo" class="logo">
+    <h1>MosquitoBGone</h1>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Control Section -->
+    <section class="control-panel">
+      <h2>Device Controls</h2>
+      <button id="sprayButton" class="action-btn">Activate Spray</button>
+      <button id="soundButton" class="action-btn">Activate Sound</button>
+    </section>
+
+    <!-- Timer Section -->
+    <section class="timer-panel">
+      <h2>Set Timer</h2>
+      <div class="timer-inputs">
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime">
+      </div>
+      <div class="timer-inputs">
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime">
+      </div>
+      <div class="timer-inputs">
+        <label for="duration">Duration (min):</label>
+        <input type="number" id="duration" placeholder="Enter duration">
+      </div>
+      <button id="setTimerButton" class="action-btn">Set Timer</button>
+    </section>
+
+    <!-- Status and Error Messages -->
+    <div id="status" class="status-bar">Device Status: Offline</div>
+    <div id="errorMessages" class="error-message">Error: Something went wrong!</div>
+
+    <!-- Battery Section -->
+    <section class="battery-panel">
+      <h2>Battery Level</h2>
+      <div id="batteryLevel">
+        <div id="batteryBar"><div></div></div>
+      </div>
+      <p id="batteryText">Battery: 100%</p>
+    </section>
+
+    <!-- QR Code Section -->
+   <section class="qr-section">
+  <h2>Access App</h2>
+  <p>Scan the QR code to access this web application:</p>
+  <!-- Add the QR code image here -->
+  <img src="C:\Users\USER\OneDrive\Documents\MosquitoBGone" alt="QR Code for MosquitBGone" id="qrcode" class="qr-image">
+	</section>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

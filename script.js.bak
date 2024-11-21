@@ -1,0 +1,120 @@
+// Register the service worker for offline functionality
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(function(registration) {
+      console.log('Service Worker registered with scope:', registration.scope);
+    })
+    .catch(function(error) {
+      console.log('Service Worker registration failed:', error);
+    });
+}
+
+
+let timerId; // Variable to hold the timer ID for clearing it later
+let batteryLevel = 100; // Initial battery level
+let isDeviceOn = false; // Tracks whether the device is on or off
+
+// Function to start the timer for a specific duration in minutes
+function startTimer(durationInMinutes) {
+  document.getElementById('status').innerText = "Device Status: Running";
+  // Convert minutes to milliseconds (1 minute = 60,000 milliseconds)
+  const durationInMilliseconds = durationInMinutes * 60000;
+  // The device will stop after the specified duration
+  timerId = setTimeout(function() {
+    document.getElementById('status').innerText = "Device Status: Stopped";
+    console.log("Device stopped after running for", durationInMinutes, "minutes");
+  }, durationInMilliseconds); // Convert minutes to milliseconds
+}
+
+// Add event listener to activate spray
+document.getElementById('sprayButton').addEventListener('click', function() {
+  isDeviceOn = true; // Set the device status to on
+  document.getElementById('status').innerText = "Device Status: Spray Activated";
+  document.getElementById('errorMessages').style.display = 'none'; // Hide error messages when device is turned on
+  // Logic to activate the spray (Bluetooth logic goes here)
+});
+
+// Add event listener to activate sound
+document.getElementById('soundButton').addEventListener('click', function() {
+  isDeviceOn = true; // Set the device status to on
+  document.getElementById('status').innerText = "Device Status: Sound Activated";
+  document.getElementById('errorMessages').style.display = 'none'; // Hide error messages when device is turned on
+  // Logic to activate the sound (Bluetooth logic goes here)
+});
+
+// Function to update the battery level and indicator
+function updateBatteryLevel() {
+  batteryLevel -= 0.5; // Simulate battery drain
+  if (batteryLevel < 0) batteryLevel = 100; // Reset battery level after reaching 0%
+
+  const batteryText = document.getElementById('batteryText');
+  const batteryBar = document.getElementById('batteryBar').firstChild;
+  
+  batteryText.innerText = `Battery: ${Math.round(batteryLevel)}%`;
+  batteryBar.style.width = `${batteryLevel}%`;
+}
+
+// Function to convert time (HH:MM) to minutes
+function timeToMinutes(timeString) {
+  const [hours, minutes] = timeString.split(':').map(num => parseInt(num, 10));
+  return (hours * 60) + minutes; // Convert hours and minutes to total minutes
+}
+
+// Function to set the start and end time and calculate the duration
+function scheduleActivation(startTime, endTime) {
+  const startMinutes = timeToMinutes(startTime);
+  const endMinutes = timeToMinutes(endTime);
+
+  const duration = endMinutes - startMinutes; // Duration in minutes
+  if (duration <= 0) {
+    showErrorMessage('End time must be later than start time!');
+    return;
+  }
+
+  startTimer(duration);
+  document.getElementById('status').innerText = `Device scheduled from ${startTime} to ${endTime}`;
+}
+
+// Add event listener for setting the specific start and end time
+document.getElementById('setTimerButton').addEventListener('click', function() {
+  const startTime = document.getElementById('startTime').value;
+  const endTime = document.getElementById('endTime').value;
+  const duration = parseInt(document.getElementById('duration').value);
+
+  // Check for device status (is it on or off?)
+  if (!isDeviceOn) {
+    showErrorMessage('Device is off. Please activate the spray or sound first.');
+    return;
+  }
+
+  // Validate duration input
+  if (isNaN(duration) || duration <= 0) {
+    showErrorMessage('Please enter a valid duration!');
+    return;
+  }
+
+  // Check if times are valid
+  if (!startTime || !endTime) {
+    showErrorMessage('Please enter both start and end times!');
+    return;
+  }
+
+  scheduleActivation(startTime, endTime);
+});
+
+// Function to show error message
+function showErrorMessage(message) {
+  const errorMessagesDiv = document.getElementById('errorMessages');
+  errorMessagesDiv.innerHTML = message;
+  errorMessagesDiv.style.display = 'block'; // Show the error message
+}
+
+// Generate QR Code for the app
+const qrCode = new QRCode(document.getElementById('qrcode'), {
+  text: window.location.href,
+  width: 128,
+  height: 128,
+});
+
+// Simulate battery update every second
+setInterval(updateBatteryLevel, 1000);

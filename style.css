@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(120deg, #4f91ff, #5d2eff);
+  margin: 0;
+  color: white;
+  text-align: center;
+}
+
+.navbar {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 20px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* Section Titles */
+h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #f1f1f1;
+}
+
+/* Buttons */
+.action-btn {
+  background: linear-gradient(120deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(120deg, #ff5f7e, #ff0000);
+}
+
+/* Timer Inputs */
+.timer-inputs {
+  margin: 10px 0;
+}
+
+input[type="time"], input[type="number"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  width: 90%;
+}
+
+/* Error Message */
+.error-message {
+  background: #ff5e5e;
+  color: white;
+  padding: 10px;
+  margin: 20px 0;
+  border-radius: 8px;
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Status Bar */
+.status-bar {
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.status-bar:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Battery Section */
+#batteryLevel {
+  margin: 20px auto;
+  background: #333;
+  width: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+#batteryBar {
+  height: 20px;
+  background: #0f0;
+  width: 100%;
+  transition: width 0.5s ease;
+}
+
+/* QR Code */
+.qr-section {
+  margin-top: 20px;
+}
